@@ -1,5 +1,5 @@
 # uv run scalene cs336_basics/train_bpe.py
-# >> tinystories, parallelism 4 -> 24mins, 500MiB, ' accomplishment', LoC 147 (finding the most common pair takes the most time)
+# >> tinystories, parallelism 4 -> 25mins, 80MiB, ' accomplishment', LoC 152 (finding the most common pair takes the most time)
 # >> owt, parallelism 4 -> OOS, resource constraints
 from multiprocessing import Pool
 from typing import BinaryIO
@@ -227,5 +227,5 @@ def train_bpe_expts_owt() -> None:
 if __name__ == "__main__":
     os.makedirs("results/", exist_ok=True)
     # train_bpe_development()
-    train_bpe_tinystories()
+    # train_bpe_tinystories()
     # train_bpe_expts_owt()

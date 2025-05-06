@@ -1,6 +1,20 @@
-import json
+# uv run cs336_basics/tokenizer.py
+# >> tinystories -> 4
+# >> owt -> OOS, resource constraints
+# >> use tinystories tokenizer for owt -> compression ratio will be smaller because
+#    tokenizer is optimized for pair counts in tinystories
+# throughput ->  (4 cores, 22 MiB, 17 mins, 0.32 MiB/min/core) -> (32 cores, 825 GiB, 58 days)
+# >> vocab size < 65536
+from multiprocessing import Pool
 from typing import Iterable, Iterator
+import json
+import random
 import regex as re
+
+from tqdm import tqdm
+import numpy as np
+
+from train_bpe import find_chunk_boundaries
 
 
 class Tokenizer:
@@ -66,12 +80,17 @@ class Tokenizer:
         text = text.decode("utf-8", "replace")
         return text
 
-    def _pre_tokenize(self, text: str, special_tokens: list[str]) -> list[tuple[bytes]]:
-        text = re.split(
-            "|".join([re.escape(special_token) for special_token in special_tokens]),
-            text,
-        )
-        text = " ".join(text)
+    def _pre_tokenize(
+        self, text: str, special_tokens: list[str] = None
+    ) -> list[tuple[bytes]]:
+        if special_tokens:
+            text = re.split(
+                "|".join(
+                    [re.escape(special_token) for special_token in special_tokens]
+                ),
+                text,
+            )
+            text = " ".join(text)
         matches = re.finditer(
             r"""'(?:[sdmt]|ll|ve|re)| ?\p{L}+| ?\p{N}+| ?[^\s\p{L}\p{N}]+|\s+(?!\S)|\s+""",
             text,
@@ -101,7 +120,7 @@ class Tokenizer:
         return new_pre_token
 
 
-if __name__ == "__main__":
+def development():
     vocab_filepath = "results/vocab_development.json"
     merges_filepath = "results/merges_development.json"
     special_tokens = ["<|endoftext|>"]
@@ -116,5 +135,115 @@ if __name__ == "__main__":
     for i, tokens in enumerate(tokenizer.encode_iterable(texts)):
         text = tokenizer.decode(tokens)
         print(
-            f"Length of text: {len(text)} | Number of tokens: {len(tokens)} | Ratio: {len(text)/len(tokens):.2f} | Texts match: {text == texts[i]}"
+            f"Number of tokens: {len(tokens)} | Compression Ratio: {len(list(text.encode('utf-8')))/len(tokens):.2f} | Texts match: {text == texts[i]}"
         )
+
+
+def tinystories():
+    vocab_filepath = "results/vocab_tinystories.json"
+    merges_filepath = "results/merges_tinystories.json"
+    special_tokens = ["<|endoftext|>"]
+    tokenizer = Tokenizer.from_files(vocab_filepath, merges_filepath, special_tokens)
+    with open("data/TinyStoriesV2-GPT4-valid.txt", "rb") as f:
+        boundaries = find_chunk_boundaries(
+            f, 1000, tokenizer.special_tokens[0].encode("utf-8")
+        )
+        boundaries = list(zip(boundaries[:-1], boundaries[1:]))
+        boundaries = random.sample(boundaries, 10)
+        texts = []
+        for start, end in boundaries:
+            f.seek(start)
+            text = f.read(end - start).decode("utf-8", errors="ignore")
+            texts.append(text)
+    for i, tokens in enumerate(tokenizer.encode_iterable(texts)):
+        og_text = b""
+        for x in tokenizer._pre_tokenize(texts[i], tokenizer.special_tokens):
+            for y in x:
+                og_text += y
+        og_text = og_text.decode("utf-8")
+        text = tokenizer.decode(tokens)
+        print(
+            f"Number of tokens: {len(tokens)} | Compression Ratio: {len(list(og_text.encode('utf-8')))/len(tokens):.2f} | Texts match: {text == og_text}"
+        )
+
+
+def owt():
+    vocab_filepath = "results/vocab_owt.json"
+    merges_filepath = "results/merges_owt.json"
+    special_tokens = ["<|endoftext|>"]
+    tokenizer = Tokenizer.from_files(vocab_filepath, merges_filepath, special_tokens)
+    with open("data/owt_valid.txt.gz", "rb") as f:
+        boundaries = find_chunk_boundaries(
+            f, 1000, tokenizer.special_tokens[0].encode("utf-8")
+        )
+        boundaries = list(zip(boundaries[:-1], boundaries[1:]))
+        boundaries = random.sample(boundaries, 10)
+        texts = []
+        for start, end in boundaries:
+            f.seek(start)
+            text = f.read(end - start).decode("utf-8", errors="ignore")
+            texts.append(text)
+    for i, tokens in enumerate(tokenizer.encode_iterable(texts)):
+        og_text = b""
+        for x in tokenizer._pre_tokenize(texts[i], tokenizer.special_tokens):
+            for y in x:
+                og_text += y
+        og_text = og_text.decode("utf-8")
+        text = tokenizer.decode(tokens)
+        print(
+            f"Number of tokens: {len(tokens)} | Compression Ratio: {len(list(og_text.encode('utf-8')))/len(tokens):.2f} | Texts match: {text == og_text}"
+        )
+
+
+def _run(input_path, start, end, tokenizer):
+    with open(input_path, "rb") as f:
+        f.seek(start)
+        text = f.read(end - start).decode("utf-8", errors="ignore")
+    texts = [text[i : i + 1000] for i in range(0, len(text), 1000)]
+    tokenized_text = []
+    for tokens in tokenizer.encode_iterable(texts):
+        tokenized_text += tokens
+    return tokenized_text
+
+
+def throughput_and_save():
+    input_path = "data/TinyStoriesV2-GPT4-train.txt"
+    output_path = "results/TinyStoriesV2-GPT4-train.npy"
+    vocab_filepath = "results/vocab_tinystories.json"
+    merges_filepath = "results/merges_tinystories.json"
+    special_tokens = ["<|endoftext|>"]
+    tokenizer = Tokenizer.from_files(vocab_filepath, merges_filepath, special_tokens)
+    with open(input_path, "rb") as f:
+        boundaries = find_chunk_boundaries(
+            f, 100000, tokenizer.special_tokens[0].encode("utf-8")
+        )
+        boundaries = list(zip(boundaries[:-1], boundaries[1:]))
+        boundaries = random.sample(boundaries, 10000)
+    with Pool(processes=4) as pool:
+        tasks = []
+        for start, end in boundaries:
+            task = pool.apply_async(
+                _run,
+                args=(
+                    input_path,
+                    start,
+                    end,
+                    tokenizer,
+                ),
+            )
+            tasks.append(task)
+        outputs = []
+        for t in tqdm(tasks):
+            outputs.append(t.get())
+    tokenized_text = []
+    for output in outputs:
+        tokenized_text += output
+    tokenized_text = np.array(tokenized_text, dtype=np.uint16)
+    np.save(output_path, tokenized_text)
+
+
+if __name__ == "__main__":
+    # development()
+    # tinystories()
+    # owt()
+    # throughput_and_save()
