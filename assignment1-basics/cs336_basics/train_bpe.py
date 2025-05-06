@@ -51,7 +51,7 @@ def find_chunk_boundaries(
 
 def pre_tokenize_chunk(
     file_path: str, start: int, end: int, special_tokens: list[str]
-) -> dict[str, int]:
+) -> dict[tuple[bytes], int]:
     # Read chunk
     with open(file_path, "rb") as f:
         f.seek(start)
@@ -70,7 +70,10 @@ def pre_tokenize_chunk(
     # Frequency count
     pre_token_counts = {}
     for match in matches:
-        pre_token = tuple(match.group())
+        pre_token = []
+        for c in tuple(match.group()):
+            pre_token.append(c.encode("utf-8"))
+        pre_token = tuple(pre_token)
         if pre_token in pre_token_counts:
             pre_token_counts[pre_token] += 1
         else:
@@ -78,7 +81,7 @@ def pre_tokenize_chunk(
     return pre_token_counts
 
 
-def pre_tokenize(input_path: str, special_tokens: list[str]) -> dict[tuple[str], int]:
+def pre_tokenize(input_path: str, special_tokens: list[str]) -> dict[tuple[bytes], int]:
     with open(input_path, "rb") as f:
         boundaries = find_chunk_boundaries(f, 1000, special_tokens[0].encode("utf-8"))
     # outputs = []
@@ -111,8 +114,8 @@ def pre_tokenize(input_path: str, special_tokens: list[str]) -> dict[tuple[str],
 
 
 def get_pair_counts(
-    pre_token_counts: dict[tuple[str], int],
-) -> dict[tuple[str], list[int, dict[tuple[str], int]]]:
+    pre_token_counts: dict[tuple[bytes], int],
+) -> dict[tuple[bytes, bytes], tuple[int, dict[tuple[bytes], int]]]:
     pair_counts = {}
     for pre_token, count in pre_token_counts.items():
         for i in range(len(pre_token) - 1):
@@ -125,24 +128,26 @@ def get_pair_counts(
     return pair_counts
 
 
-def merge_pre_token(pre_token: tuple[str], merge_pair: tuple[str]) -> tuple[str]:
-    res = []
+def merge_pre_token(
+    pre_token: tuple[bytes], merge_pair: tuple[bytes, bytes]
+) -> tuple[bytes]:
+    new_pre_token = []
     i = 0
     while i < len(pre_token):
         pair = pre_token[i : i + 2]
         if pair == merge_pair:
-            res.append("".join(pair))
+            new_pre_token.append(pair[0] + pair[1])
             i += 2
         else:
-            res.append(pre_token[i])
+            new_pre_token.append(pre_token[i])
             i += 1
-    res = tuple(res)
-    return res
+    new_pre_token = tuple(new_pre_token)
+    return new_pre_token
 
 
 def merge(
-    pair_counts: dict[tuple[str], list[int, dict[tuple[str], int]]],
-) -> tuple[str]:
+    pair_counts: dict[tuple[bytes], tuple[int, dict[tuple[bytes], int]]],
+) -> tuple[bytes, bytes]:
     # Find top pair
     top_pair = (
         sorted(
@@ -176,40 +181,51 @@ def train_bpe_tokenizer(
 ) -> tuple[dict[int, bytes], list[tuple[bytes, bytes]]]:
     pre_token_counts = pre_tokenize(input_path, special_tokens)
     pair_counts = get_pair_counts(pre_token_counts)
-    vocab = {i: bytes([i]) for i in range(0, 256)}
+    vocab = {}
     for i, special_token in enumerate(special_tokens):
         vocab[256 + i] = special_token.encode("utf-8")
-    k = len(vocab)
+    k = 256 + len(vocab)
     merges = []
     while k < vocab_size:
         merge_pair = merge(pair_counts)
-        vocab[k] = "".join(merge_pair).encode("utf-8")
+        vocab[k] = merge_pair[0] + merge_pair[1]
         k += 1
-        merges.append((merge_pair[0].encode("utf-8"), merge_pair[1].encode("utf-8")))
+        merges.append(merge_pair)
     return vocab, merges
 
 
-def train_bpe_tinystories():
+def train_bpe_development() -> None:
+    vocab, merges = train_bpe_tokenizer(
+        "data/Development.txt", 1_000, special_tokens=["<|endoftext|>"]
+    )
+    with open("results/vocab_development.json", "w") as f:
+        json.dump({k: v.decode("utf-8") for k, v in vocab.items()}, f)
+    with open("results/merges_development.json", "w") as f:
+        json.dump([(x.decode("utf-8"), y.decode("utf-8")) for x, y in merges], f)
+
+
+def train_bpe_tinystories() -> None:
     vocab, merges = train_bpe_tokenizer(
         "data/TinyStoriesV2-GPT4-train.txt", 10_000, special_tokens=["<|endoftext|>"]
     )
     with open("results/vocab_tinystories.json", "w") as f:
-        json.dump({k: v.decode("utf-8") for k, v in vocab.items() if k > 255}, f)
+        json.dump({k: v.decode("utf-8") for k, v in vocab.items()}, f)
     with open("results/merges_tinystories.json", "w") as f:
         json.dump([(x.decode("utf-8"), y.decode("utf-8")) for x, y in merges], f)
 
 
-def train_bpe_expts_owt():
+def train_bpe_expts_owt() -> None:
     vocab, merges = train_bpe_tokenizer(
         "data/owt_train.txt.gz", 32_000, special_tokens=["<|endoftext|>"]
     )
     with open("results/vocab_owt.json", "w") as f:
-        json.dump({k: v.decode("utf-8") for k, v in vocab.items() if k > 255}, f)
+        json.dump({k: v.decode("utf-8") for k, v in vocab.items()}, f)
     with open("results/merges_owt.json", "w") as f:
         json.dump([(x.decode("utf-8"), y.decode("utf-8")) for x, y in merges], f)
 
 
 if __name__ == "__main__":
     os.makedirs("results/", exist_ok=True)
+    # train_bpe_development()
     train_bpe_tinystories()
     # train_bpe_expts_owt()
