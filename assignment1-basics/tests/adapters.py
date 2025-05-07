@@ -12,8 +12,9 @@ from torch import Tensor
 
 from cs336_basics.nn.modules.linear import Linear
 from cs336_basics.nn.modules.embedding import Embedding
-from cs336_basics.nn.modules.norms import RMSNorm
+from cs336_basics.nn.modules.rmsnorm import RMSNorm
 from cs336_basics.nn.modules.positionwise_feedforward import SwiGLUFFN
+from cs336_basics.nn.modules.rope import RoPE
 
 
 def run_linear(
@@ -215,7 +216,9 @@ def run_rope(
     Returns:
         Float[Tensor, " ... sequence_length d_k"]: Tensor with RoPEd input.
     """
-    raise NotImplementedError
+    model = RoPE(theta, d_k, max_seq_len)
+    out_features = model(in_query_or_key, token_positions)
+    return out_features
 
 
 def run_transformer_block(
