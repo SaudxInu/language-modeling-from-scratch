@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 from einops import einsum
 
-from .softmax import softmax
+from cs336_basics.nn.modules.softmax import softmax
 
 
 def scaled_dot_product_attention(
