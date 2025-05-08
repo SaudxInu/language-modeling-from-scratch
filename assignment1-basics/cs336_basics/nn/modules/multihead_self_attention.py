@@ -10,7 +10,6 @@ from cs336_basics.nn.modules.scaled_dot_product_attention import (
 
 
 class MultiheadSelfAttention(nn.Module):
-
     def __init__(
         self,
         d_model: int,

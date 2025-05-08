@@ -52,12 +52,12 @@ class TransformerLM(nn.Module):
         self.o = Linear(d_model, vocab_size)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
+        x = x[..., : self.context_length]
         x = self.embedding(x)
         for transformer_block in self.transformer_blocks:
             x = transformer_block(x)
         x = self.rms_norm(x)
         x = self.o(x)
-        x = softmax(x, -1)
         return x
 
 
