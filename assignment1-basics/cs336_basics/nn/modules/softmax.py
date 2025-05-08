@@ -1,6 +1,5 @@
 import torch
 import torch.nn as nn
-from einops import einsum, reduce
 
 
 def softmax(x: torch.Tensor, dim: int = -1) -> torch.Tensor:

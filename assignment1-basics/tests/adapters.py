@@ -22,6 +22,7 @@ from cs336_basics.nn.modules.scaled_dot_product_attention import (
 from cs336_basics.nn.modules.multihead_self_attention import MultiheadSelfAttention
 from cs336_basics.nn.modules.transformer_block import TransformerBlock
 from cs336_basics.nn.modules.transformer_lm import TransformerLM
+from cs336_basics.nn.modules.cross_entropy import cross_entropy
 
 
 def run_linear(
@@ -532,7 +533,8 @@ def run_cross_entropy(
     Returns:
         Float[Tensor, ""]: The average cross-entropy loss across examples.
     """
-    raise NotImplementedError
+    loss = cross_entropy(inputs, targets)
+    return loss
 
 
 def run_gradient_clipping(
