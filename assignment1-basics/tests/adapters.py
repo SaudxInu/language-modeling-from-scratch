@@ -10,6 +10,8 @@ import torch
 import torch.nn as nn
 from torch import Tensor
 
+from cs336_basics.nn.learning_rate_schedule import learning_rate_schedule
+from cs336_basics.nn.modules.gradient_clipping import gradient_clipping
 from cs336_basics.nn.modules.linear import Linear
 from cs336_basics.nn.modules.embedding import Embedding
 from cs336_basics.nn.modules.rmsnorm import RMSNorm
@@ -23,6 +25,7 @@ from cs336_basics.nn.modules.multihead_self_attention import MultiheadSelfAttent
 from cs336_basics.nn.modules.transformer_block import TransformerBlock
 from cs336_basics.nn.modules.transformer_lm import TransformerLM
 from cs336_basics.nn.modules.cross_entropy import cross_entropy
+from cs336_basics.nn.modules.adamw import AdamW
 
 
 def run_linear(
@@ -548,14 +551,14 @@ def run_gradient_clipping(
 
     The gradients of the parameters (parameter.grad) should be modified in-place.
     """
-    raise NotImplementedError
+    gradient_clipping(parameters, max_l2_norm)
 
 
 def get_adamw_cls() -> type[torch.optim.Optimizer]:
     """
     Returns a torch.optim.Optimizer that implements AdamW.
     """
-    raise NotImplementedError
+    return AdamW
 
 
 def run_get_lr_cosine_schedule(
@@ -583,7 +586,9 @@ def run_get_lr_cosine_schedule(
     Returns:
         Learning rate at the given iteration under the specified schedule.
     """
-    raise NotImplementedError
+    return learning_rate_schedule(
+        it, max_learning_rate, min_learning_rate, warmup_iters, cosine_cycle_iters
+    )
 
 
 def run_save_checkpoint(
