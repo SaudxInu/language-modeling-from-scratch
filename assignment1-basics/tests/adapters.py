@@ -12,7 +12,7 @@ from torch import Tensor
 
 from cs336_basics.checkpointing import load_checkpoint, save_checkpoint
 from cs336_basics.data_loading import data_loading
-from cs336_basics.nn.learning_rate_schedule import learning_rate_schedule
+from cs336_basics.nn.modules.learning_rate_schedule import learning_rate_schedule
 from cs336_basics.nn.modules.gradient_clipping import gradient_clipping
 from cs336_basics.nn.modules.linear import Linear
 from cs336_basics.nn.modules.embedding import Embedding

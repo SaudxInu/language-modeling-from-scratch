@@ -20,9 +20,9 @@ class SwiGLUFFN(nn.Module):
         self.d_ff = d_ff if d_ff else int(math.ceil((8 * d_model) / (3 * 64)) * 64)
         self.device = device
         self.dtype = dtype
-        self.w1 = Linear(self.d_model, self.d_ff)
-        self.w2 = Linear(self.d_ff, self.d_model)
-        self.w3 = Linear(self.d_model, self.d_ff)
+        self.w1 = Linear(self.d_model, self.d_ff, device=device)
+        self.w2 = Linear(self.d_ff, self.d_model, device=device)
+        self.w3 = Linear(self.d_model, self.d_ff, device=device)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         a = self.w1(x)

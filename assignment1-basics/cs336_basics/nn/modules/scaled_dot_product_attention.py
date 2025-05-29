@@ -14,7 +14,7 @@ def scaled_dot_product_attention(
     x = einsum(
         q, k, "... seq_len_1 d_k, ... seq_len_2 d_k -> ... seq_len_1 seq_len_2"
     ) / (q.shape[-1] ** 0.5)
-    y = torch.zeros(mask.shape)
+    y = torch.zeros(mask.shape, device=q.device)
     y[~mask] = -float("inf")
     x = x + y
     x = softmax(x, -1)

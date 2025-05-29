@@ -45,7 +45,7 @@ class RoPE(nn.Module):
         rope_cache = self.cache[token_positions]
         rope_cache = rearrange(
             rope_cache,
-            "(batch_size seq_len) ... -> batch_size seq_len ...",
+            "(batch_size seq_len) ... -> batch_size 1 seq_len ...",
             seq_len=seq_len,
         )
         x = rearrange(x, "... seq_len (d d2) -> ... seq_len d d2", d2=2)

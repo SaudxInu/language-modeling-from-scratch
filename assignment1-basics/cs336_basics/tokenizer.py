@@ -90,17 +90,22 @@ class Tokenizer:
                 ),
                 text,
             )
-            text = " ".join(text)
-        matches = re.finditer(
-            r"""'(?:[sdmt]|ll|ve|re)| ?\p{L}+| ?\p{N}+| ?[^\s\p{L}\p{N}]+|\s+(?!\S)|\s+""",
-            text,
-        )
+        if type(text) is str:
+            text = [text]
         pre_tokens = []
-        for match in matches:
-            pre_token = []
-            for c in tuple(match.group()):
-                pre_token.append(c.encode("utf-8"))
-            pre_tokens.append(tuple(pre_token))
+        for t in text:
+            matches = re.finditer(
+                r"""'(?:[sdmt]|ll|ve|re)| ?\p{L}+| ?\p{N}+| ?[^\s\p{L}\p{N}]+|\s+(?!\S)|\s+""",
+                str(t),
+            )
+            for match in matches:
+                pre_token = []
+                for c in tuple(match.group()):
+                    pre_token.append(c.encode("utf-8"))
+                pre_tokens.append(tuple(pre_token))
+            if special_tokens:
+                for special_token in special_tokens:
+                    pre_tokens.append((special_token.encode("utf-8"),))
         return pre_tokens
 
     def _merge_pre_token(
@@ -133,7 +138,7 @@ def development():
         "hello my name is Saud 😊 and I love coding!",
     ]
     for i, tokens in enumerate(tokenizer.encode_iterable(texts)):
-        text = tokenizer.decode(tokens)
+        text = tokenizer.decode(tokens[:-1])
         print(
             f"Number of tokens: {len(tokens)} | Compression Ratio: {len(list(text.encode('utf-8')))/len(tokens):.2f} | Texts match: {text == texts[i]}"
         )
@@ -238,6 +243,7 @@ def throughput_and_save():
     tokenized_text = []
     for output in outputs:
         tokenized_text += output
+        tokenized_text += [256]
     tokenized_text = np.array(tokenized_text, dtype=np.uint16)
     np.save(output_path, tokenized_text)
 

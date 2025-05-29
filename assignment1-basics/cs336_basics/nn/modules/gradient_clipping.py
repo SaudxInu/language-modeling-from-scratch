@@ -14,3 +14,5 @@ def gradient_clipping(parameters, maximum_norm):
                 continue
 
             p.grad.data *= scaling_factor
+
+    return norm
