@@ -49,7 +49,7 @@ class TransformerLM(nn.Module):
             ]
         )
         self.rms_norm = RMSNorm(d_model, device=device, dtype=dtype)
-        self.o = Linear(d_model, vocab_size)
+        self.o = Linear(d_model, vocab_size, device=device, dtype=dtype)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         x = x[..., : self.context_length]

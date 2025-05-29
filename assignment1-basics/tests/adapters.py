@@ -10,6 +10,8 @@ import torch
 import torch.nn as nn
 from torch import Tensor
 
+from cs336_basics.checkpointing import load_checkpoint, save_checkpoint
+from cs336_basics.data_loading import data_loading
 from cs336_basics.nn.learning_rate_schedule import learning_rate_schedule
 from cs336_basics.nn.modules.gradient_clipping import gradient_clipping
 from cs336_basics.nn.modules.linear import Linear
@@ -501,7 +503,7 @@ def run_get_batch(
         is the sampled input sequences, and the second tuple item is the corresponding
         language modeling labels.
     """
-    raise NotImplementedError
+    return data_loading(dataset, batch_size, context_length, device)
 
 
 def run_softmax(in_features: Float[Tensor, " ..."], dim: int) -> Float[Tensor, " ..."]:
@@ -607,7 +609,7 @@ def run_save_checkpoint(
             we've completed.
         out (str | os.PathLike | BinaryIO | IO[bytes]): Path or file-like object to serialize the model, optimizer, and iteration to.
     """
-    raise NotImplementedError
+    save_checkpoint(model, optimizer, iteration, out)
 
 
 def run_load_checkpoint(
@@ -628,7 +630,7 @@ def run_load_checkpoint(
     Returns:
         int: the previously-serialized number of iterations.
     """
-    raise NotImplementedError
+    return load_checkpoint(src, model, optimizer)
 
 
 def get_tokenizer(
