@@ -1,0 +1,549 @@
+fp32
+root@C.20616744:/home/assignment2-systems$ uv run cs336_systems/benchmarking_script.py --model_size small
+Model: BasicsTransformerLM, Config: {'d_model': 768, 'd_ff': 3072, 'num_layers': 12, 'num_heads': 12}
+    Forward pass time: 0.0308 +- 0.0002 seconds
+    Backward pass time: 0.0521 +- 0.0003 seconds
+root@C.20616744:/home/assignment2-systems$ uv run cs336_systems/benchmarking_script.py --model_size medium
+Model: BasicsTransformerLM, Config: {'d_model': 1024, 'd_ff': 4096, 'num_layers': 24, 'num_heads': 16}
+    Forward pass time: 0.0619 +- 0.0304 seconds
+    Backward pass time: 0.0780 +- 0.0001 seconds
+root@C.20616744:/home/assignment2-systems$ uv run cs336_systems/benchmarking_script.py --model_size large
+Model: BasicsTransformerLM, Config: {'d_model': 1280, 'd_ff': 5120, 'num_layers': 36, 'num_heads': 20}
+    Forward pass time: 0.0865 +- 0.0012 seconds
+    Backward pass time: 0.1495 +- 0.0016 seconds
+root@C.20616744:/home/assignment2-systems$ uv run cs336_systems/benchmarking_script.py --model_size xl
+Model: BasicsTransformerLM, Config: {'d_model': 1600, 'd_ff': 6400, 'num_layers': 48, 'num_heads': 25}
+    Forward pass time: 0.1187 +- 0.0012 seconds
+    Backward pass time: 0.2627 +- 0.0011 seconds
+root@C.20616744:/home/assignment2-systems$ uv run cs336_systems/benchmarking_script.py --model_size 2.7B
+Model: BasicsTransformerLM, Config: {'d_model': 2560, 'd_ff': 10240, 'num_layers': 32, 'num_heads': 32}
+    Forward pass time: 0.0921 +- 0.0001 seconds
+    Backward pass time: 0.3886 +- 0.0002 seconds
+
+
+fp16
+root@C.20616744:/home/assignment2-systems$ uv run cs336_systems/benchmarking_script.py --model_size small --mixed_precision
+Model: BasicsTransformerLM, Config: {'d_model': 768, 'd_ff': 3072, 'num_layers': 12, 'num_heads': 12}
+    Forward pass time: 0.1026 +- 0.2083 seconds
+    Backward pass time: 0.0573 +- 0.0009 seconds
+root@C.20616744:/home/assignment2-systems$ uv run cs336_systems/benchmarking_script.py --model_size medium --mixed_precision
+Model: BasicsTransformerLM, Config: {'d_model': 1024, 'd_ff': 4096, 'num_layers': 24, 'num_heads': 16}
+    Forward pass time: 0.1536 +- 0.2325 seconds
+    Backward pass time: 0.1117 +- 0.0042 seconds
+root@C.20616744:/home/assignment2-systems$ uv run cs336_systems/benchmarking_script.py --model_size large --mixed_precision
+Model: BasicsTransformerLM, Config: {'d_model': 1280, 'd_ff': 5120, 'num_layers': 36, 'num_heads': 20}
+    Forward pass time: 0.1726 +- 0.2191 seconds
+    Backward pass time: 0.1763 +- 0.0015 seconds
+root@C.20616744:/home/assignment2-systems$ uv run cs336_systems/benchmarking_script.py --model_size xl --mixed_precision
+Model: BasicsTransformerLM, Config: {'d_model': 1600, 'd_ff': 6400, 'num_layers': 48, 'num_heads': 25}
+    Forward pass time: 0.2089 +- 0.2151 seconds
+    Backward pass time: 0.2795 +- 0.0037 seconds
+root@C.20616744:/home/assignment2-systems$ uv run cs336_systems/benchmarking_script.py --model_size 2.7B --mixed_precision
+Model: BasicsTransformerLM, Config: {'d_model': 2560, 'd_ff': 10240, 'num_layers': 32, 'num_heads': 32}
+    Forward pass time: 0.1608 +- 0.2131 seconds
+    Backward pass time: 0.3063 +- 0.0032 seconds
+
+
+bf16
+root@C.20616744:/home/assignment2-systems$ uv run cs336_systems/benchmarking_script.py --model_size small --mixed_precision
+Model: BasicsTransformerLM, Config: {'d_model': 768, 'd_ff': 3072, 'num_layers': 12, 'num_heads': 12}
+    Forward pass time: 0.0479 +- 0.0517 seconds
+    Backward pass time: 0.0516 +- 0.0084 seconds
+root@C.20616744:/home/assignment2-systems$ uv run cs336_systems/benchmarking_script.py --model_size medium --mixed_precision
+Model: BasicsTransformerLM, Config: {'d_model': 1024, 'd_ff': 4096, 'num_layers': 24, 'num_heads': 16}
+    Forward pass time: 0.0923 +- 0.0583 seconds
+    Backward pass time: 0.1100 +- 0.0036 seconds
+root@C.20616744:/home/assignment2-systems$ uv run cs336_systems/benchmarking_script.py --model_size large --mixed_precision
+Model: BasicsTransformerLM, Config: {'d_model': 1280, 'd_ff': 5120, 'num_layers': 36, 'num_heads': 20}
+    Forward pass time: 0.1178 +- 0.0531 seconds
+    Backward pass time: 0.1761 +- 0.0010 seconds
+root@C.20616744:/home/assignment2-systems$ uv run cs336_systems/benchmarking_script.py --model_size xl --mixed_precision
+Model: BasicsTransformerLM, Config: {'d_model': 1600, 'd_ff': 6400, 'num_layers': 48, 'num_heads': 25}
+    Forward pass time: 0.1772 +- 0.1290 seconds
+    Backward pass time: 0.2779 +- 0.0021 seconds
+root@C.20616744:/home/assignment2-systems$ uv run cs336_systems/benchmarking_script.py --model_size 2.7B --mixed_precision
+Model: BasicsTransformerLM, Config: {'d_model': 2560, 'd_ff': 10240, 'num_layers': 32, 'num_heads': 32}
+    Forward pass time: 0.1077 +- 0.0582 seconds
+    Backward pass time: 0.3007 +- 0.0086 seconds
+
+
+Running: uv run nsys profile -o small_ctx_128 python cs336_systems/benchmarking_script.py --model_size small --context_length 128 --nsys
+Collecting data...
+Model: BasicsTransformerLM, Config: {'d_model': 768, 'd_ff': 3072, 'num_layers': 12, 'num_heads': 12}
+    Forward pass time: 0.0377 +- 0.0004 seconds
+    Backward pass time: 0.0698 +- 0.0003 seconds
+Generating '/tmp/nsys-report-7b77.qdstrm'
+[1/1] [========================100%] small_ctx_128.nsys-rep
+Generated:
+        /home/assignment2-systems/small_ctx_128.nsys-rep
+Running: uv run nsys profile -o small_ctx_256 python cs336_systems/benchmarking_script.py --model_size small --context_length 256 --nsys
+Collecting data...
+Model: BasicsTransformerLM, Config: {'d_model': 768, 'd_ff': 3072, 'num_layers': 12, 'num_heads': 12}
+    Forward pass time: 0.0389 +- 0.0005 seconds
+    Backward pass time: 0.0736 +- 0.0007 seconds
+Generating '/tmp/nsys-report-2060.qdstrm'
+[1/1] [========================100%] small_ctx_256.nsys-rep
+Generated:
+        /home/assignment2-systems/small_ctx_256.nsys-rep
+Running: uv run nsys profile -o small_ctx_512 python cs336_systems/benchmarking_script.py --model_size small --context_length 512 --nsys
+Collecting data...
+Model: BasicsTransformerLM, Config: {'d_model': 768, 'd_ff': 3072, 'num_layers': 12, 'num_heads': 12}
+    Forward pass time: 0.0380 +- 0.0007 seconds
+    Backward pass time: 0.0692 +- 0.0006 seconds
+Generating '/tmp/nsys-report-f72b.qdstrm'
+[1/1] [========================100%] small_ctx_512.nsys-rep
+Generated:
+        /home/assignment2-systems/small_ctx_512.nsys-rep
+Running: uv run nsys profile -o small_ctx_1024 python cs336_systems/benchmarking_script.py --model_size small --context_length 1024 --nsys
+Collecting data...
+Model: BasicsTransformerLM, Config: {'d_model': 768, 'd_ff': 3072, 'num_layers': 12, 'num_heads': 12}
+    Forward pass time: 0.0384 +- 0.0007 seconds
+    Backward pass time: 0.0715 +- 0.0036 seconds
+Generating '/tmp/nsys-report-99e1.qdstrm'
+[1/1] [========================100%] small_ctx_1024.nsys-rep
+Generated:
+        /home/assignment2-systems/small_ctx_1024.nsys-rep
+
+Running: uv run nsys profile -o medium_ctx_128 python cs336_systems/benchmarking_script.py --model_size medium --context_length 128 --nsys
+Collecting data...
+Model: BasicsTransformerLM, Config: {'d_model': 1024, 'd_ff': 4096, 'num_layers': 24, 'num_heads': 16}
+    Forward pass time: 0.0876 +- 0.0314 seconds
+    Backward pass time: 0.1422 +- 0.0015 seconds
+Generating '/tmp/nsys-report-d9d7.qdstrm'
+[1/1] [========================100%] medium_ctx_128.nsys-rep
+Generated:
+        /home/assignment2-systems/medium_ctx_128.nsys-rep
+Running: uv run nsys profile -o medium_ctx_256 python cs336_systems/benchmarking_script.py --model_size medium --context_length 256 --nsys
+Collecting data...
+Model: BasicsTransformerLM, Config: {'d_model': 1024, 'd_ff': 4096, 'num_layers': 24, 'num_heads': 16}
+    Forward pass time: 0.0889 +- 0.0365 seconds
+    Backward pass time: 0.1420 +- 0.0025 seconds
+Generating '/tmp/nsys-report-cf34.qdstrm'
+[1/1] [========================100%] medium_ctx_256.nsys-rep
+Generated:
+        /home/assignment2-systems/medium_ctx_256.nsys-rep
+Running: uv run nsys profile -o medium_ctx_512 python cs336_systems/benchmarking_script.py --model_size medium --context_length 512 --nsys
+Collecting data...
+Model: BasicsTransformerLM, Config: {'d_model': 1024, 'd_ff': 4096, 'num_layers': 24, 'num_heads': 16}
+    Forward pass time: 0.0877 +- 0.0363 seconds
+    Backward pass time: 0.1409 +- 0.0025 seconds
+Generating '/tmp/nsys-report-a108.qdstrm'
+[1/1] [========================100%] medium_ctx_512.nsys-rep
+Generated:
+        /home/assignment2-systems/medium_ctx_512.nsys-rep
+Running: uv run nsys profile -o medium_ctx_1024 python cs336_systems/benchmarking_script.py --model_size medium --context_length 1024 --nsys
+Collecting data...
+Model: BasicsTransformerLM, Config: {'d_model': 1024, 'd_ff': 4096, 'num_layers': 24, 'num_heads': 16}
+    Forward pass time: 0.0818 +- 0.0362 seconds
+    Backward pass time: 0.1693 +- 0.0019 seconds
+Generating '/tmp/nsys-report-3ab2.qdstrm'
+[1/1] [========================100%] medium_ctx_1024.nsys-rep
+Generated:
+        /home/assignment2-systems/medium_ctx_1024.nsys-rep
+
+Running: uv run nsys profile -o large_ctx_128 python cs336_systems/benchmarking_script.py --model_size large --context_length 128 --nsys
+Collecting data...
+Model: BasicsTransformerLM, Config: {'d_model': 1280, 'd_ff': 5120, 'num_layers': 36, 'num_heads': 20}
+    Forward pass time: 0.1156 +- 0.0027 seconds
+    Backward pass time: 0.2189 +- 0.0068 seconds
+Generating '/tmp/nsys-report-4bdf.qdstrm'
+[1/1] [========================100%] large_ctx_128.nsys-rep
+Generated:
+        /home/assignment2-systems/large_ctx_128.nsys-rep
+Running: uv run nsys profile -o large_ctx_256 python cs336_systems/benchmarking_script.py --model_size large --context_length 256 --nsys
+Collecting data...
+Model: BasicsTransformerLM, Config: {'d_model': 1280, 'd_ff': 5120, 'num_layers': 36, 'num_heads': 20}
+    Forward pass time: 0.1159 +- 0.0032 seconds
+    Backward pass time: 0.2149 +- 0.0024 seconds
+Generating '/tmp/nsys-report-f509.qdstrm'
+[1/1] [========================100%] large_ctx_256.nsys-rep
+Generated:
+        /home/assignment2-systems/large_ctx_256.nsys-rep
+Running: uv run nsys profile -o large_ctx_512 python cs336_systems/benchmarking_script.py --model_size large --context_length 512 --nsys
+Collecting data...
+Model: BasicsTransformerLM, Config: {'d_model': 1280, 'd_ff': 5120, 'num_layers': 36, 'num_heads': 20}
+    Forward pass time: 0.1140 +- 0.0042 seconds
+    Backward pass time: 0.2152 +- 0.0041 seconds
+Generating '/tmp/nsys-report-d1f9.qdstrm'
+[1/1] [========================100%] large_ctx_512.nsys-rep
+Generated:
+        /home/assignment2-systems/large_ctx_512.nsys-rep
+Running: uv run nsys profile -o large_ctx_1024 python cs336_systems/benchmarking_script.py --model_size large --context_length 1024 --nsys
+Collecting data...
+Model: BasicsTransformerLM, Config: {'d_model': 1280, 'd_ff': 5120, 'num_layers': 36, 'num_heads': 20}
+    Forward pass time: 0.1494 +- 0.0001 seconds
+    Backward pass time: 0.3734 +- 0.0015 seconds
+Generating '/tmp/nsys-report-21fa.qdstrm'
+[1/1] [========================100%] large_ctx_1024.nsys-rep
+Generated:
+        /home/assignment2-systems/large_ctx_1024.nsys-rep
+
+Running: uv run nsys profile -o xl_ctx_128 python cs336_systems/benchmarking_script.py --model_size xl --context_length 128 --nsys
+Collecting data...
+Model: BasicsTransformerLM, Config: {'d_model': 1600, 'd_ff': 6400, 'num_layers': 48, 'num_heads': 25}
+    Forward pass time: 0.1561 +- 0.0028 seconds
+    Backward pass time: 0.2926 +- 0.0032 seconds
+Generating '/tmp/nsys-report-222b.qdstrm'
+[1/1] [========================100%] xl_ctx_128.nsys-rep
+Generated:
+        /home/assignment2-systems/xl_ctx_128.nsys-rep
+Running: uv run nsys profile -o xl_ctx_256 python cs336_systems/benchmarking_script.py --model_size xl --context_length 256 --nsys
+Collecting data...
+Model: BasicsTransformerLM, Config: {'d_model': 1600, 'd_ff': 6400, 'num_layers': 48, 'num_heads': 25}
+    Forward pass time: 0.1723 +- 0.0371 seconds
+    Backward pass time: 0.2979 +- 0.0032 seconds
+Generating '/tmp/nsys-report-c54e.qdstrm'
+[1/1] [========================100%] xl_ctx_256.nsys-rep
+Generated:
+        /home/assignment2-systems/xl_ctx_256.nsys-rep
+Running: uv run nsys profile -o xl_ctx_512 python cs336_systems/benchmarking_script.py --model_size xl --context_length 512 --nsys
+Collecting data...
+Model: BasicsTransformerLM, Config: {'d_model': 1600, 'd_ff': 6400, 'num_layers': 48, 'num_heads': 25}
+    Forward pass time: 0.1573 +- 0.0020 seconds
+    Backward pass time: 0.4028 +- 0.0030 seconds
+Generating '/tmp/nsys-report-810d.qdstrm'
+[1/1] [========================100%] xl_ctx_512.nsys-rep
+Generated:
+        /home/assignment2-systems/xl_ctx_512.nsys-rep
+Running: uv run nsys profile -o xl_ctx_1024 python cs336_systems/benchmarking_script.py --model_size xl --context_length 1024 --nsys
+Collecting data...
+Model: BasicsTransformerLM, Config: {'d_model': 1600, 'd_ff': 6400, 'num_layers': 48, 'num_heads': 25}
+    Forward pass time: 0.2880 +- 0.0002 seconds
+    Backward pass time: 0.6991 +- 0.0049 seconds
+Generating '/tmp/nsys-report-d8b3.qdstrm'
+[1/1] [========================100%] xl_ctx_1024.nsys-rep
+Generated:
+        /home/assignment2-systems/xl_ctx_1024.nsys-rep
+
+unning: uv run nsys profile -o 2.7B_ctx_128 python cs336_systems/benchmarking_script.py --model_size 2.7B --context_length 128 --nsys
+Collecting data...
+Model: BasicsTransformerLM, Config: {'d_model': 2560, 'd_ff': 10240, 'num_layers': 32, 'num_heads': 32}
+    Forward pass time: 0.1078 +- 0.0045 seconds
+    Backward pass time: 0.3050 +- 0.0012 seconds
+Generating '/tmp/nsys-report-607a.qdstrm'
+[1/1] [========================100%] 2.7B_ctx_128.nsys-rep
+Generated:
+        /home/assignment2-systems/2.7B_ctx_128.nsys-rep
+Running: uv run nsys profile -o 2.7B_ctx_256 python cs336_systems/benchmarking_script.py --model_size 2.7B --context_length 256 --nsys
+Collecting data...
+Model: BasicsTransformerLM, Config: {'d_model': 2560, 'd_ff': 10240, 'num_layers': 32, 'num_heads': 32}
+    Forward pass time: 0.1066 +- 0.0050 seconds
+    Backward pass time: 0.3918 +- 0.0012 seconds
+Generating '/tmp/nsys-report-6d34.qdstrm'
+[1/1] [========================100%] 2.7B_ctx_256.nsys-rep
+Generated:
+        /home/assignment2-systems/2.7B_ctx_256.nsys-rep
+Running: uv run nsys profile -o 2.7B_ctx_512 python cs336_systems/benchmarking_script.py --model_size 2.7B --context_length 512 --nsys
+Collecting data...
+Model: BasicsTransformerLM, Config: {'d_model': 2560, 'd_ff': 10240, 'num_layers': 32, 'num_heads': 32}
+    Forward pass time: 0.1858 +- 0.0002 seconds
+    Backward pass time: 0.5771 +- 0.0015 seconds
+Generating '/tmp/nsys-report-f85e.qdstrm'
+[1/1] [========================100%] 2.7B_ctx_512.nsys-rep
+Generated:
+        /home/assignment2-systems/2.7B_ctx_512.nsys-rep
+Running: uv run nsys profile -o 2.7B_ctx_1024 python cs336_systems/benchmarking_script.py --model_size 2.7B --context_length 1024 --nsys
+Collecting data...
+Model: BasicsTransformerLM, Config: {'d_model': 2560, 'd_ff': 10240, 'num_layers': 32, 'num_heads': 32}
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 256.00 MiB. GPU 0 has a total capacity of 79.11 GiB of which 192.06 MiB is free. Process 1598739 has 78.90 GiB memory in use. Of the allocated memory 76.69 GiB is allocated by PyTorch, and 1.48 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+Generating '/tmp/nsys-report-86a7.qdstrm'
+[1/1] [========================100%] 2.7B_ctx_1024.nsys-rep
+Generated:
+        /home/assignment2-systems/2.7B_ctx_1024.nsys-rep
+Command failed: uv run nsys profile -o 2.7B_ctx_1024 python cs336_systems/benchmarking_script.py --model_size 2.7B --context_length 1024 --nsys
+Error: Command '['uv', 'run', 'nsys', 'profile', '-o', '2.7B_ctx_1024', 'python', 'cs336_systems/benchmarking_script.py', '--model_size', '2.7B', '--context_length', '1024', '--nsys']' returned non-zero exit status 1.
+
+Running: uv run cs336_systems/benchmarking_script.py --model_size 2.7B --context_length 128 --profile_memory 2.7B_ctx_128
+Model: BasicsTransformerLM, Config: {'d_model': 2560, 'd_ff': 10240, 'num_layers': 32, 'num_heads': 32}
+    Forward pass time: 0.0826 +- 0.0016 seconds
+    Backward pass time: 0.3002 +- 0.0006 seconds
+Running: uv run cs336_systems/benchmarking_script.py --model_size 2.7B --context_length 256 --profile_memory 2.7B_ctx_256
+Model: BasicsTransformerLM, Config: {'d_model': 2560, 'd_ff': 10240, 'num_layers': 32, 'num_heads': 32}
+    Forward pass time: 0.0920 +- 0.0002 seconds
+    Backward pass time: 0.3892 +- 0.0003 seconds
+Running: uv run cs336_systems/benchmarking_script.py --model_size 2.7B --context_length 512 --profile_memory 2.7B_ctx_512
+Model: BasicsTransformerLM, Config: {'d_model': 2560, 'd_ff': 10240, 'num_layers': 32, 'num_heads': 32}
+    Forward pass time: 0.1846 +- 0.0005 seconds
+    Backward pass time: 0.5706 +- 0.0018 seconds
+
+Running: uv run cs336_systems/benchmarking_script.py --model_size 2.7B --context_length 128 --mixed_precision --profile_memory 2.7B_ctx_128_mp
+Model: BasicsTransformerLM, Config: {'d_model': 2560, 'd_ff': 10240, 'num_layers': 32, 'num_heads': 32}
+    Forward pass time: 0.1542 +- 0.1729 seconds
+    Backward pass time: 0.3058 +- 0.0057 seconds
+Running: uv run cs336_systems/benchmarking_script.py --model_size 2.7B --context_length 256 --mixed_precision --profile_memory 2.7B_ctx_256_mp
+Model: BasicsTransformerLM, Config: {'d_model': 2560, 'd_ff': 10240, 'num_layers': 32, 'num_heads': 32}
+    Forward pass time: 0.1156 +- 0.0578 seconds
+    Backward pass time: 0.3078 +- 0.0084 seconds
+Running: uv run cs336_systems/benchmarking_script.py --model_size 2.7B --context_length 512 --mixed_precision --profile_memory 2.7B_ctx_512_mp
+Model: BasicsTransformerLM, Config: {'d_model': 2560, 'd_ff': 10240, 'num_layers': 32, 'num_heads': 32}
+    Forward pass time: 0.1002 +- 0.0396 seconds
+    Backward pass time: 0.2929 +- 0.0047 seconds
+
+
+Running: uv run cs336_systems/attention.py --impl naive
+d_model: 16, sequence_length: 256
+    Forward pass time: 0.0006 +- 0.0000 seconds
+    Backward pass time: 0.0010 +- 0.0001 seconds
+d_model: 16, sequence_length: 1024
+    Forward pass time: 0.0006 +- 0.0000 seconds
+    Backward pass time: 0.0012 +- 0.0000 seconds
+d_model: 16, sequence_length: 4096
+    Forward pass time: 0.0027 +- 0.0000 seconds
+    Backward pass time: 0.0066 +- 0.0001 seconds
+d_model: 16, sequence_length: 8192
+    Forward pass time: 0.0102 +- 0.0000 seconds
+    Backward pass time: 0.0245 +- 0.0001 seconds
+d_model: 16, sequence_length: 16384
+    Forward pass time: 0.0395 +- 0.0001 seconds
+    Backward pass time: 0.0953 +- 0.0006 seconds
+d_model: 32, sequence_length: 256
+    Forward pass time: 0.0004 +- 0.0001 seconds
+    Backward pass time: 0.0011 +- 0.0000 seconds
+d_model: 32, sequence_length: 1024
+    Forward pass time: 0.0006 +- 0.0000 seconds
+    Backward pass time: 0.0011 +- 0.0000 seconds
+d_model: 32, sequence_length: 4096
+    Forward pass time: 0.0028 +- 0.0000 seconds
+    Backward pass time: 0.0067 +- 0.0000 seconds
+d_model: 32, sequence_length: 8192
+    Forward pass time: 0.0105 +- 0.0000 seconds
+    Backward pass time: 0.0248 +- 0.0001 seconds
+d_model: 32, sequence_length: 16384
+    Forward pass time: 0.0406 +- 0.0001 seconds
+    Backward pass time: 0.0963 +- 0.0001 seconds
+d_model: 64, sequence_length: 256
+    Forward pass time: 0.0004 +- 0.0001 seconds
+    Backward pass time: 0.0011 +- 0.0000 seconds
+d_model: 64, sequence_length: 1024
+    Forward pass time: 0.0006 +- 0.0000 seconds
+    Backward pass time: 0.0011 +- 0.0000 seconds
+d_model: 64, sequence_length: 4096
+    Forward pass time: 0.0030 +- 0.0000 seconds
+    Backward pass time: 0.0072 +- 0.0001 seconds
+d_model: 64, sequence_length: 8192
+    Forward pass time: 0.0117 +- 0.0001 seconds
+    Backward pass time: 0.0272 +- 0.0001 seconds
+d_model: 64, sequence_length: 16384
+    Forward pass time: 0.0459 +- 0.0001 seconds
+    Backward pass time: 0.1061 +- 0.0005 seconds
+d_model: 128, sequence_length: 256
+    Forward pass time: 0.0003 +- 0.0000 seconds
+    Backward pass time: 0.0006 +- 0.0000 seconds
+d_model: 128, sequence_length: 1024
+    Forward pass time: 0.0004 +- 0.0000 seconds
+    Backward pass time: 0.0009 +- 0.0000 seconds
+d_model: 128, sequence_length: 4096
+    Forward pass time: 0.0036 +- 0.0000 seconds
+    Backward pass time: 0.0083 +- 0.0000 seconds
+d_model: 128, sequence_length: 8192
+    Forward pass time: 0.0140 +- 0.0000 seconds
+    Backward pass time: 0.0314 +- 0.0001 seconds
+d_model: 128, sequence_length: 16384
+    Forward pass time: 0.0548 +- 0.0001 seconds
+    Backward pass time: 0.1236 +- 0.0001 seconds
+
+Running: uv run cs336_systems/attention.py --impl naive --causal
+d_model: 16, sequence_length: 256
+    Forward pass time: 0.0006 +- 0.0000 seconds
+    Backward pass time: 0.0010 +- 0.0002 seconds
+d_model: 16, sequence_length: 1024
+    Forward pass time: 0.0006 +- 0.0000 seconds
+    Backward pass time: 0.0012 +- 0.0000 seconds
+d_model: 16, sequence_length: 4096
+    Forward pass time: 0.0032 +- 0.0000 seconds
+    Backward pass time: 0.0072 +- 0.0000 seconds
+d_model: 16, sequence_length: 8192
+    Forward pass time: 0.0123 +- 0.0000 seconds
+    Backward pass time: 0.0268 +- 0.0000 seconds
+d_model: 16, sequence_length: 16384
+    Forward pass time: 0.0480 +- 0.0001 seconds
+    Backward pass time: 0.1040 +- 0.0002 seconds
+d_model: 32, sequence_length: 256
+    Forward pass time: 0.0004 +- 0.0000 seconds
+    Backward pass time: 0.0010 +- 0.0000 seconds
+d_model: 32, sequence_length: 1024
+    Forward pass time: 0.0004 +- 0.0000 seconds
+    Backward pass time: 0.0010 +- 0.0000 seconds
+d_model: 32, sequence_length: 4096
+    Forward pass time: 0.0033 +- 0.0000 seconds
+    Backward pass time: 0.0072 +- 0.0002 seconds
+d_model: 32, sequence_length: 8192
+    Forward pass time: 0.0126 +- 0.0000 seconds
+    Backward pass time: 0.0269 +- 0.0001 seconds
+d_model: 32, sequence_length: 16384
+    Forward pass time: 0.0491 +- 0.0001 seconds
+    Backward pass time: 0.1051 +- 0.0002 seconds
+d_model: 64, sequence_length: 256
+    Forward pass time: 0.0003 +- 0.0001 seconds
+    Backward pass time: 0.0009 +- 0.0000 seconds
+d_model: 64, sequence_length: 1024
+    Forward pass time: 0.0004 +- 0.0000 seconds
+    Backward pass time: 0.0010 +- 0.0000 seconds
+d_model: 64, sequence_length: 4096
+    Forward pass time: 0.0035 +- 0.0000 seconds
+    Backward pass time: 0.0077 +- 0.0000 seconds
+d_model: 64, sequence_length: 8192
+    Forward pass time: 0.0138 +- 0.0000 seconds
+    Backward pass time: 0.0292 +- 0.0000 seconds
+d_model: 64, sequence_length: 16384
+    Forward pass time: 0.0545 +- 0.0001 seconds
+    Backward pass time: 0.1149 +- 0.0002 seconds
+d_model: 128, sequence_length: 256
+    Forward pass time: 0.0005 +- 0.0001 seconds
+    Backward pass time: 0.0012 +- 0.0000 seconds
+d_model: 128, sequence_length: 1024
+    Forward pass time: 0.0006 +- 0.0000 seconds
+    Backward pass time: 0.0012 +- 0.0000 seconds
+d_model: 128, sequence_length: 4096
+    Forward pass time: 0.0042 +- 0.0000 seconds
+    Backward pass time: 0.0090 +- 0.0001 seconds
+d_model: 128, sequence_length: 8192
+    Forward pass time: 0.0162 +- 0.0001 seconds
+    Backward pass time: 0.0340 +- 0.0001 seconds
+d_model: 128, sequence_length: 16384
+    Forward pass time: 0.0634 +- 0.0001 seconds
+    Backward pass time: 0.1329 +- 0.0001 seconds
+
+Running: uv run cs336_systems/attention.py --impl jit
+d_model: 16, sequence_length: 256
+    Forward pass time: 0.0019 +- 0.0002 seconds
+    Backward pass time: 0.0011 +- 0.0002 seconds
+d_model: 16, sequence_length: 1024
+    Forward pass time: 0.0012 +- 0.0003 seconds
+    Backward pass time: 0.0010 +- 0.0002 seconds
+d_model: 16, sequence_length: 4096
+    Forward pass time: 0.0043 +- 0.0217 seconds
+    Backward pass time: 0.0032 +- 0.0001 seconds
+d_model: 16, sequence_length: 8192
+    Forward pass time: 0.0051 +- 0.0001 seconds
+    Backward pass time: 0.0105 +- 0.0001 seconds
+d_model: 16, sequence_length: 16384
+    Forward pass time: 0.0181 +- 0.0001 seconds
+    Backward pass time: 0.0405 +- 0.0001 seconds
+d_model: 32, sequence_length: 256
+    Forward pass time: 0.0013 +- 0.0001 seconds
+    Backward pass time: 0.0009 +- 0.0002 seconds
+d_model: 32, sequence_length: 1024
+    Forward pass time: 0.0013 +- 0.0000 seconds
+    Backward pass time: 0.0009 +- 0.0000 seconds
+d_model: 32, sequence_length: 4096
+    Forward pass time: 0.0023 +- 0.0000 seconds
+    Backward pass time: 0.0034 +- 0.0000 seconds
+d_model: 32, sequence_length: 8192
+    Forward pass time: 0.0057 +- 0.0000 seconds
+    Backward pass time: 0.0116 +- 0.0001 seconds
+d_model: 32, sequence_length: 16384
+    Forward pass time: 0.0202 +- 0.0002 seconds
+    Backward pass time: 0.0426 +- 0.0002 seconds
+d_model: 64, sequence_length: 256
+    Forward pass time: 0.0020 +- 0.0003 seconds
+    Backward pass time: 0.0017 +- 0.0003 seconds
+d_model: 64, sequence_length: 1024
+    Forward pass time: 0.0021 +- 0.0004 seconds
+    Backward pass time: 0.0020 +- 0.0009 seconds
+d_model: 64, sequence_length: 4096
+    Forward pass time: 0.0032 +- 0.0002 seconds
+    Backward pass time: 0.0044 +- 0.0004 seconds
+d_model: 64, sequence_length: 8192
+    Forward pass time: 0.0080 +- 0.0002 seconds
+    Backward pass time: 0.0138 +- 0.0003 seconds
+d_model: 64, sequence_length: 16384
+    Forward pass time: 0.0254 +- 0.0006 seconds
+    Backward pass time: 0.0522 +- 0.0005 seconds
+d_model: 128, sequence_length: 256
+    Forward pass time: 0.0012 +- 0.0001 seconds
+    Backward pass time: 0.0009 +- 0.0001 seconds
+d_model: 128, sequence_length: 1024
+    Forward pass time: 0.0012 +- 0.0000 seconds
+    Backward pass time: 0.0010 +- 0.0000 seconds
+d_model: 128, sequence_length: 4096
+    Forward pass time: 0.0033 +- 0.0000 seconds
+    Backward pass time: 0.0050 +- 0.0000 seconds
+d_model: 128, sequence_length: 8192
+    Forward pass time: 0.0095 +- 0.0004 seconds
+    Backward pass time: 0.0178 +- 0.0004 seconds
+d_model: 128, sequence_length: 16384
+    Forward pass time: 0.0336 +- 0.0002 seconds
+    Backward pass time: 0.0694 +- 0.0003 seconds
+
+Running: uv run cs336_systems/attention.py --impl jit --causal
+d_model: 16, sequence_length: 256
+    Forward pass time: 0.0020 +- 0.0002 seconds
+    Backward pass time: 0.0009 +- 0.0001 seconds
+d_model: 16, sequence_length: 1024
+    Forward pass time: 0.0016 +- 0.0003 seconds
+    Backward pass time: 0.0011 +- 0.0002 seconds
+d_model: 16, sequence_length: 4096
+    Forward pass time: 0.0022 +- 0.0001 seconds
+    Backward pass time: 0.0032 +- 0.0001 seconds
+d_model: 16, sequence_length: 8192
+    Forward pass time: 0.0063 +- 0.0001 seconds
+    Backward pass time: 0.0113 +- 0.0001 seconds
+d_model: 16, sequence_length: 16384
+    Forward pass time: 0.0214 +- 0.0003 seconds
+    Backward pass time: 0.0443 +- 0.0002 seconds
+d_model: 32, sequence_length: 256
+    Forward pass time: 0.0025 +- 0.0008 seconds
+    Backward pass time: 0.0019 +- 0.0004 seconds
+d_model: 32, sequence_length: 1024
+    Forward pass time: 0.0024 +- 0.0003 seconds
+    Backward pass time: 0.0020 +- 0.0003 seconds
+d_model: 32, sequence_length: 4096
+    Forward pass time: 0.0033 +- 0.0008 seconds
+    Backward pass time: 0.0039 +- 0.0003 seconds
+d_model: 32, sequence_length: 8192
+    Forward pass time: 0.0074 +- 0.0001 seconds
+    Backward pass time: 0.0121 +- 0.0001 seconds
+d_model: 32, sequence_length: 16384
+    Forward pass time: 0.0230 +- 0.0001 seconds
+    Backward pass time: 0.0453 +- 0.0003 seconds
+d_model: 64, sequence_length: 256
+    Forward pass time: 0.0010 +- 0.0000 seconds
+    Backward pass time: 0.0008 +- 0.0005 seconds
+d_model: 64, sequence_length: 1024
+    Forward pass time: 0.0011 +- 0.0000 seconds
+    Backward pass time: 0.0008 +- 0.0000 seconds
+d_model: 64, sequence_length: 4096
+    Forward pass time: 0.0027 +- 0.0000 seconds
+    Backward pass time: 0.0039 +- 0.0000 seconds
+d_model: 64, sequence_length: 8192
+    Forward pass time: 0.0077 +- 0.0001 seconds
+    Backward pass time: 0.0140 +- 0.0000 seconds
+d_model: 64, sequence_length: 16384
+    Forward pass time: 0.0284 +- 0.0000 seconds
+    Backward pass time: 0.0552 +- 0.0001 seconds
+d_model: 128, sequence_length: 256
+    Forward pass time: 0.0011 +- 0.0001 seconds
+    Backward pass time: 0.0009 +- 0.0003 seconds
+d_model: 128, sequence_length: 1024
+    Forward pass time: 0.0011 +- 0.0000 seconds
+    Backward pass time: 0.0008 +- 0.0000 seconds
+d_model: 128, sequence_length: 4096
+    Forward pass time: 0.0034 +- 0.0001 seconds
+    Backward pass time: 0.0052 +- 0.0001 seconds
+d_model: 128, sequence_length: 8192
+    Forward pass time: 0.0110 +- 0.0002 seconds
+    Backward pass time: 0.0192 +- 0.0003 seconds
+d_model: 128, sequence_length: 16384
+    Forward pass time: 0.0389 +- 0.0002 seconds
+    Backward pass time: 0.0738 +- 0.0003 seconds
+
+
+Running: uv run cs336_systems/benchmarking_script.py --model_size 2.7B --context_length 128 --jit
+Model: OptimizedModule, Config: {'d_model': 2560, 'd_ff': 10240, 'num_layers': 32, 'num_heads': 32}
+/home/assignment2-systems/.venv/lib/python3.11/site-packages/torch/_inductor/compile_fx.py:194: UserWarning: TensorFloat32 tensor cores for float32 matrix multiplication available but not enabled. Consider setting `torch.set_float32_matmul_precision('high')` for better performance.
+  warnings.warn(
+    Forward pass time: 0.0440 +- 0.0002 seconds
+    Backward pass time: 0.2876 +- 0.0001 seconds
+Running: uv run cs336_systems/benchmarking_script.py --model_size 2.7B --context_length 256 --jit
+Model: OptimizedModule, Config: {'d_model': 2560, 'd_ff': 10240, 'num_layers': 32, 'num_heads': 32}
+/home/assignment2-systems/.venv/lib/python3.11/site-packages/torch/_inductor/compile_fx.py:194: UserWarning: TensorFloat32 tensor cores for float32 matrix multiplication available but not enabled. Consider setting `torch.set_float32_matmul_precision('high')` for better performance.
+  warnings.warn(
+    Forward pass time: 0.0825 +- 0.0009 seconds
+    Backward pass time: 0.3689 +- 0.0003 seconds
+Running: uv run cs336_systems/benchmarking_script.py --model_size 2.7B --context_length 512 --jit
+Model: OptimizedModule, Config: {'d_model': 2560, 'd_ff': 10240, 'num_layers': 32, 'num_heads': 32}
+/home/assignment2-systems/.venv/lib/python3.11/site-packages/torch/_inductor/compile_fx.py:194: UserWarning: TensorFloat32 tensor cores for float32 matrix multiplication available but not enabled. Consider setting `torch.set_float32_matmul_precision('high')` for better performance.
+  warnings.warn(
+    Forward pass time: 0.1668 +- 0.0003 seconds
+    Backward pass time: 0.5303 +- 0.0002 seconds
