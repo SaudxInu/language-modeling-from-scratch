@@ -12,7 +12,6 @@ from cs336_basics.model import scaled_dot_product_attention
 from cs336_basics.nn_utils import softmax
 
 
-# TODO: Memory profiling
 def benchmark(q, k, v, impl, only_forward, nsys, mask=None):
     if device.type == "cuda":
         synchronize = torch.cuda.synchronize

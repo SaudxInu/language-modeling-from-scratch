@@ -4,7 +4,10 @@ from typing import Type
 
 import torch
 
+from cs336_systems.ddp_overlap_bucketed import DDPBucketedParameters
+from cs336_systems.ddp_overlap_individual_parameters import DDPIndividualParameters
 from cs336_systems.flash_forward import PyTorchFlashAttention, TritonFlashAttention
+from cs336_systems.optimizer_state_sharding import ShardedOptimizer
 
 
 def get_flashattention_autograd_function_pytorch() -> Type:
@@ -54,7 +57,7 @@ def get_ddp_individual_parameters(module: torch.nn.Module) -> torch.nn.Module:
         Instance of a DDP class.
     """
     # For example: return DDPIndividualParameters(module)
-    raise NotImplementedError
+    return DDPIndividualParameters(module)
 
 
 def ddp_individual_parameters_on_after_backward(
@@ -71,7 +74,7 @@ def ddp_individual_parameters_on_after_backward(
             Optimizer being used with the DDP-wrapped model.
     """
     # For example: ddp_model.finish_gradient_synchronization()
-    raise NotImplementedError
+    return ddp_model.finish_gradient_synchronization()
 
 
 def get_ddp_bucketed(module: torch.nn.Module, bucket_size_mb: float) -> torch.nn.Module:
@@ -92,7 +95,7 @@ def get_ddp_bucketed(module: torch.nn.Module, bucket_size_mb: float) -> torch.nn
     Returns:
         Instance of a DDP class.
     """
-    raise NotImplementedError
+    return DDPBucketedParameters(module, bucket_size_mb)
 
 
 def ddp_bucketed_on_after_backward(
@@ -109,7 +112,7 @@ def ddp_bucketed_on_after_backward(
             Optimizer being used with the DDP-wrapped model.
     """
     # For example: ddp_model.finish_gradient_synchronization()
-    raise NotImplementedError
+    return ddp_model.finish_gradient_synchronization()
 
 
 def ddp_bucketed_on_train_batch_start(
@@ -124,7 +127,7 @@ def ddp_bucketed_on_train_batch_start(
         optimizer: torch.optim.Optimizer
             Optimizer being used with the DDP-wrapped model.
     """
-    raise NotImplementedError
+    return
 
 
 def get_sharded_optimizer(
@@ -145,4 +148,4 @@ def get_sharded_optimizer(
     Returns:
         Instance of sharded optimizer.
     """
-    raise NotImplementedError
+    return ShardedOptimizer(params, optimizer_cls, **kwargs)

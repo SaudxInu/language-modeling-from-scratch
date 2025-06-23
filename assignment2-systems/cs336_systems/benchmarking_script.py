@@ -13,7 +13,6 @@ from cs336_basics.nn_utils import cross_entropy, softmax
 from cs336_basics.optimizer import AdamW
 import cs336_basics
 
-# TODO: Memory profiling 2.7B for 128, 256, 512 context lengths plus with mixed precision
 model_configs = {
     "small": {"d_model": 768, "d_ff": 3072, "num_layers": 12, "num_heads": 12},
     "medium": {"d_model": 1024, "d_ff": 4096, "num_layers": 24, "num_heads": 16},
@@ -73,7 +72,7 @@ def benchmark(
     if profile_memory:
         torch.cuda.memory._record_memory_history(
             enabled=True,
-            trace_alloc_max_entries=1000000,
+            trace_alloc_max_entries=100_000,
             trace_alloc_record_context=True,
         )
 

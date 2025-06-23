@@ -853,3 +853,55 @@ flash attention: forward
 5           4096.0  0.728064  0.663552
 6           8192.0  1.787904  1.326080
 7          16384.0  5.603328  5.039104
+
+
+1MiB     0.0003s
+10MiB    0.0016s
+100MiB   0.0110s
+1000MiB  0.1024s
+
+Naive DDP
+Total Time         1.11s
+Communication Time 0.3949s
+
+One-All-Reduce DDP
+Total Time         1.10s
+Communication Time 0.3925s
+
+Overlap Comm-Comp DDP
+Total Time         0.88s
+
+Overlap Comm-Comp + Bucketed DDP
+Bucket Size        1.0 MiB
+Total Time         0.95s
+Bucket Size        10.0 MiB
+Total Time         0.94s
+Bucket Size        100.0 MiB
+Total Time         0.96s
+Bucket Size        1000.0 MiB
+Total Time         0.86s
+
+Memory allocated after model initialization on device 0: 3806.08 MB
+Memory allocated after model initialization on device 1: 3806.08 MB
+Memory allocated after backward pass on device 0: 7647.34 MB
+Memory allocated after backward pass on device 1: 7647.34 MB
+Memory allocated after optimizer step on device 0: 15260.37 MB
+Memory allocated after optimizer step on device 1: 15260.37 MB
+Memory allocated after backward pass on device 0: 15261.37 MB
+Memory allocated after backward pass on device 1: 15261.37 MB
+Memory allocated after optimizer step on device 0: 15260.37 MB
+
+Memory allocated after model initialization on device 0: 3806.08 MB
+Memory allocated after model initialization on device 1: 3806.08 MB
+Memory allocated after backward pass on device 0: 7647.34 MB
+Memory allocated after backward pass on device 1: 7647.34 MB
+Memory allocated after optimizer step on device 0: 11445.35 MB
+Memory allocated after optimizer step on device 1: 11452.36 MB
+Memory allocated after backward pass on device 0: 11443.35 MB
+Memory allocated after backward pass on device 1: 11451.36 MB
+
+Naive DDP + Optimizer Sharding
+Total Time         1.34s 
+
+Broadcast operation added time, now we have all reduce + broadcast. 
+Ideally it should be reduce scatter and all gather to keep communication cost same.
