@@ -8,7 +8,7 @@ def get_response_log_probs(
     labels: torch.Tensor,
     return_token_entropy: bool = False,
 ) -> dict[str, torch.Tensor]:
-    logits = model(input_ids).logits
+    logits = model(input_ids.to(model.device)).logits
     log_probs = logits - torch.logsumexp(logits, dim=-1, keepdim=True)
     response_log_probs = log_probs.gather(-1, labels.unsqueeze(-1)).squeeze(-1)
     if return_token_entropy:
